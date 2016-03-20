@@ -1,0 +1,34 @@
+{{define "header"}}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Wizardry Lab</title>
+    <meta name="keywords" content="wizard, freelancing, professional, student, startup">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--
+    TODO: stylesheet
+    <link rel="stylesheet" href="public/style.css" media="screen" charset="utf-8">
+    <link rel="stylesheet" href="public/syntax.css" media="screen" charset="utf-8">
+    <script type="text/javascript">
+    -->
+  </head>
+  <body>
+    <header>
+      <div id="header-overlay"></div>
+      <span id="logo"></span>
+      <div id="menu">
+        <i class="material-icons">menu</i>
+        <ul id="menu-items">
+          {{range .Pages}}
+            <li><a href="#{{.Name | slug}}">{{.Name}}</a></li>
+          {{end}}
+        </ul>
+      </div>
+      <span id="more">
+        <i class="material-icons">expand_more</i>
+      </span>
+    </header>
+    <section id="content">
+{{end}}
