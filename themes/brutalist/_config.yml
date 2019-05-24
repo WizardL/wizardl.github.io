@@ -1,0 +1,11 @@
+menu:
+  首页: /
+  归档: /archives
+  关于: /about
+
+# google-analytics
+google_analytic: aaa
+
+startyear: 2017
+
+share_nav: false

@@ -1,0 +1,190 @@
+
+.content, .side-nav, .spacing {
+    margin-top: 8vmin;
+    margin-bottom: 16vmin;
+}
+
+.side-nav, .spacing {
+    margin: 0 1rem 0 1rem;
+    min-width: 8vw;
+
+    &-inner {
+        width: 8vw;
+    }
+}
+
+.side-nav {
+    &-inner {
+        overflow: auto;
+        // fixed doesn't has a height, use `position: sticky` instead.
+        // position: fixed;
+        position: sticky;
+        top: 11vmin;
+    }
+
+    .share, nav {
+        font-family: $fontstack-sans-serif;
+        font-size: 1.2rem;
+        font-weight: bold;
+        text-align: right;
+        text-transform: uppercase;
+
+        a {
+            border: 0;
+        }
+
+        ul {
+            line-height: 1em;
+            list-style-type: none;
+            margin: 0;
+
+            li {
+                margin: 1rem 0;
+
+                &:first-child {
+                    margin-top: 0;
+                }
+            }
+        }
+    }
+
+    .metadata {
+        line-height: 1.4em;
+        text-align: right;
+
+        margin-right: 2px;
+
+        p {
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+    }
+}
+
+.index {
+    float: right;
+    margin: 0 2rem 0 2rem;
+    margin-top: 3vmin !important;
+    // This is similar to h3
+    &::before {
+        content: "目录";
+        color: $text-color;
+        line-height: 1.1;
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+}
+
+@media handheld,
+only screen and (max-width: $breakpoint-md),
+only screen and (max-width: $breakpoint-md) {
+    .spacing {
+        float: none;
+        margin: 0;
+        min-width: 3vw;
+    }
+}
+
+@media handheld,
+only screen and (max-width: $breakpoint-sm),
+only screen and (max-device-width: $breakpoint-sm) {
+    .wrapper {
+        flex-direction: column !important;
+    }
+
+    .side-nav {
+        margin-top: 3vmin !important;
+
+        .side-nav-inner {
+            width: 100%;
+            ul {
+                display: flex;
+                justify-content: space-evenly;
+                li {
+                    display: inline;
+
+                    &:first-child {
+                        margin: 1rem 0 !important;
+                    }
+                }
+            }
+        }
+    }
+    .index {
+        float: initial !important;
+        padding: 3vmin 0;
+    }
+
+    .side-nav {
+        .side-nav-inner {
+            .divider {
+                display: none;
+            }
+        }
+    }
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.container {
+    margin: 0 8vw 0 8vw;
+    flex: 1;
+}
+
+.content {
+    p, h6 {
+        line-height: 1.7em;
+        font-size: 1rem;
+    }
+
+    ul, ol {
+        font-size: 1rem;
+    }
+
+    ul {
+        li {
+            padding-left: 1.14vmax;
+            margin-bottom: 1.5vmin;
+            &:before {
+                content: "•";
+                padding: 0 .6vmax;
+            }
+        }
+    }
+    
+    ol {
+        li {
+            padding-left: 1.54vmax;
+            margin-bottom: 1.5vmin;
+            &:before {
+                counter-increment: list;
+                content: counter(list) ".";
+                padding: 0 .6vmax;
+            }
+        }
+    }
+
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        font-size: 90%;
+        width: 100%;
+        margin-left: -1.2vw;
+        margin-right: -1.2vw;
+        margin-bottom: 1.8rem;
+
+        th {
+            border-bottom: 2px solid rgba(0,0,0,.06);
+            text-align: center;
+            padding: .6em 1.2vw;
+        }
+
+        td {
+            border-top: 1px solid rgba(0,0,0,.04);
+            padding: .6em 1.2vw;
+        }
+    }
+}

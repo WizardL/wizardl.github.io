@@ -1,0 +1,11 @@
+extends partial/layout
+
+block header
+    h1.super 文章
+
+block content
+    include mixins/article
+    +articles()
+
+block layer
+    include partial/gotoTop

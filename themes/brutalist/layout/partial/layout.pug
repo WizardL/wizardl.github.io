@@ -1,0 +1,25 @@
+doctype
+html(lang=config.language)
+    head
+        include head
+    body
+        .container
+            include scripts
+            .wrapper
+                .side-nav
+                    .side-nav-inner
+                        include nav
+                        .divider-bold
+                        block share
+
+                .spacing
+                    .spacing-inner
+
+                main(role="main")
+                    .content
+                        header
+                            block header
+                        block content
+                block layer
+        footer
+            include footer

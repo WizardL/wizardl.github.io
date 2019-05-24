@@ -1,0 +1,28 @@
+language: node_js
+node_js: stable
+git:
+  depth: 3
+cache:
+  apt: true
+  directories:
+  - node_modules
+before_install:
+- npm install hexo-cli -g
+install:
+- npm install
+before_script:
+- git config --global user.name "Wizards"
+- git config --global user.email ""
+- sed -i "s/__GitOAuthToken__/${__GitOAuthToken__}/" _config.yml
+script:
+- hexo clean
+- hexo generate
+after_success:
+- hexo deploy --silent
+branches:
+  only:
+  - master
+env:
+  global:
+  - GH_REF: github.com/wizardL/wizardl.github.io.git
+  - secure: slvscow2oDnfA3BkP5aR+ZVo5wB1T3J5/W+qQyQPriZ9xoVNA4mphXqJYk6AsBmTuA4k6OI+x25x6MLEDsF9wILNliTVhTu2w/+HZpZj0F09Gi7ZMLL0jOdNhrRSXYUuCLLUoe+AQe5tpZdGhulpLIK5j/LQDxjNmLur1/i/RyiRs5+V2Rif+fAnIil3LCtc0bMSzsG9cx/4YCsy73/FCLd02Gs+Ogt896FTcU+DRSRoJq4xX9ZcfnpYrDN4Gfr0dkCK1TeXE9f0T61wTSihuNhGHN29rCnCkfCnla6rqpHowg/0BJcXe9fhcR3MKCwIUIgiqZk4cFCoJ/T4FlvbrpfOmv0BECpmM9+xE0w217BDukurUmYUftqsD4mDscPEVDNjaFj3NlRnQZZC2940Yi7VINdONbiNqKcNiGo4oHOB2ILQyi7AZ/md0POHSTSnG2K9qZhdDIJREWhSZtvuHHGzI7+LstGpvlBtamxiCq19Fg20KkNT2inzyoTkEsapTd3hxR5WM10U5KfQ2GDPoez1df1ZpJrby2AbZWBByH9o++QVPBEbJu8dCwTFLzCxaXbMXlu3J1kajJ1fQcl/r8HfCXLYMQsgOeHF4cwgY9KYyc3wiSP62JXei/kVGRospuYG7i8rFJ7+tXGAMfSJ4ejCgSe5mHFqZMKYLohyzb4=

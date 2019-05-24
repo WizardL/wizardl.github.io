@@ -1,0 +1,24 @@
+extends partial/layout
+
+block site_title
+    != page.title + " · " + config.title
+
+block description
+    - var desc = page.desc || page.title + ' - ' + config.title
+    meta(name="description", content=desc)
+
+block header
+    include mixins/article
+    +article_header(page)
+
+block content
+    include mixins/article
+    +article_content(page)
+
+block layer
+    include partial/gotoTop
+
+block share
+    if theme.share_nav
+        include mixins/share
+        +share(page)
