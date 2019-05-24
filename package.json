@@ -20,7 +20,8 @@
     "markdown-it-footnote": "^3.0.1"
   },
   "devDependencies": {
-    "hexo-cli": "^1.1.0"
+    "hexo-cli": "^1.1.0",
+    "hexo-deployer-git": "^1.0.0"
   },
   "scripts": {
     "publish-sandbox": "hexo generate && touch public/.nojekyll && git add public/ && git commit -m \"Deploy to branch gh-pages\" && git subtree push --prefix public origin gh-pages"
