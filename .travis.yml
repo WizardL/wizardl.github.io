@@ -21,7 +21,7 @@ after_success:
 - hexo deploy --silent
 branches:
   only:
-  - master
+  - source
 env:
   global:
   - GH_REF: github.com/wizardL/wizardl.github.io.git
