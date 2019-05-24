@@ -97,4 +97,4 @@ deploy:
   type: git
   message: "Site updated: {{ now('YYYY-MM-DD HH:mm') }}"
   repo: https://__GitOAuthToken__@github.com/WizardL/wizardl.github.io.git
-  branch: gh-pages
+  branch: master
