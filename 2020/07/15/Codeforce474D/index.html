@@ -1,0 +1,52 @@
+<!DOCTYPE html><html><head><meta name="generator" content="Hexo 3.9.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="shortcut icon" href="/" type="image/x-icon"><link rel="stylesheet" href="/stylesheet/brutalist.css"><title>Codeforce 474D · Wizardry Lab</title><meta name="description" content="Codeforce 474D - Wizardry Lab"><link rel="search" href="https://wizardl.github.io/atom.xml" type="application/opensearchdescription+xml" title="Wizardry Lab"></head><body><div class="container"><script>window.onscroll = function() {scrollFunction()};
+function scrollFunction(){if(document.body.scrollTop>320||document.documentElement.scrollTop>320){document.getElementById("gotoTop").className=""}else{document.getElementById("gotoTop").className="hidden"}}
+function gotoTop(){document.body.scrollTop = 0;document.documentElement.scrollTop=0}</script><div class="wrapper"><div class="side-nav"><div class="side-nav-inner"><nav><ul><li><a href="/" target="_self">首页</a></li><li><a href="/archives" target="_self">归档</a></li><li><a href="/about" target="_self">关于</a></li></ul></nav><div class="divider-bold"></div></div></div><div class="spacing"><div class="spacing-inner"></div></div><main role="main"><div class="content"><header><div id="title"><h1>Codeforce 474D</h1></div><div id="description"><p>Codeforce 474D solution explanation</p></div><div class="divider-curly"></div></header><article><div class="index">
+<!-- toc -->
+<ul>
+<li><a href="#codeforce-474d-flowers">Codeforce 474D Flowers</a></li>
+</ul>
+<!-- tocstop -->
+</div>
+<h1><span id="codeforce-474d-flowers">Codeforce 474D Flowers</span><a href="#codeforce-474d-flowers" class="linea">¶</a></h1>
+<p>Today we are gonna take a look of problem Codeforce 474D
+<a href="https://codeforces.com/problemset/problem/474/D" target="_blank" rel="noopener">Problem Link</a></p>
+<blockquote>
+<p><strong>Problem</strong>
+We saw the little game Marmot made for Mole's lunch. Now it's Marmot's dinner time and, as we all know, Marmot eats flowers. At every dinner he eats some red and white flowers. Therefore a dinner can be represented as a sequence of several flowers, some of them white and some of them red.
+But, for a dinner to be tasty, there is a rule: Marmot wants to eat white flowers only in groups of size k.
+Now Marmot wonders in how many ways he can eat between a and b flowers. As the number of ways could be very large, print it modulo 1000000007 (10^9 + 7).
+<strong>Input</strong>
+Input contains several test cases.
+The first line contains two integers t and k (1 ≤ t, k ≤ $10^5$), where t represents the number of test cases.
+The next t lines contain two integers $a_i$ and $b_i$ (1 ≤ $a_i$ ≤ $b_i$ ≤ $10^5$), describing the i-th test.
+<strong>Output</strong>
+Print t lines to the standard output. The i-th line should contain the number of ways in which Marmot can eat between $a_i$ and $b_i$ flowers at dinner modulo 1000000007 (10^9 + 7).
+<strong>Examples</strong>
+<strong>input</strong>
+3 2
+1 3
+2 3
+4 4
+<strong>output</strong>
+6
+5
+5
+<strong>Note</strong>
+For K = 2 and length 1 Marmot can eat (R).
+For K = 2 and length 2 Marmot can eat (RR) and (WW).
+For K = 2 and length 3 Marmot can eat (RRR), (RWW) and (WWR).
+For K = 2 and length 4 Marmot can eat, for example, (WWWW) or (RWWR), but for example he can't eat (WWWR).</p>
+</blockquote>
+<p>At first glance we may think this problem is about combination math, but if you think further, you will find that you need at least $O(nk)$ time(n denote the max $b_i$ among all $i$), and that's too much.
+The solution I found is using dp. You can surprisingly find that the following dp transfer can reduce the complexity to $O(max_i{b_i})$.
+$$\begin{cases}
+dp[0..k-1]=1\
+dp[i]=dp[i-1]+dp[i-k]&amp;i\ge k
+\end{cases}$$ Where $dp[i]$ denote the number of combinations of length $i$
+For $0\le i\le k-1$, since we can't eat any white flower yet, so the value will be $1$.
+For $i\ge k$, We want to add length by $1$ everytime, and there're only two possiblities for the $i$-th flower, red or white. If it's red, it's clear that there're $dp[i-1]$ possibilities, and for white, since we need to put a whole group of $k$ flowers, the trailing $k$ flowers will all be white, and there left $i-k$ spots for us to randomly choose flowers, there're $dp[i-k]$ possibilities.</p>
+<p>The crucial part had been done, now it suffice to turn $dp$ array into prefix-sum array, then we can $O(1)$ query any segment.</p>
+<p><strong>Code:</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> _m = <span class="number">1e9</span> + <span class="number">7</span>, _n = <span class="number">1e5</span> + <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> t, k, a, b, dp[_n];</span><br><span class="line">main(<span class="keyword">void</span>) &#123;</span><br><span class="line">  <span class="built_in">cin</span>.tie(<span class="number">0</span>);</span><br><span class="line">  ios_base::sync_with_stdio(<span class="number">0</span>);</span><br><span class="line">  <span class="built_in">cin</span> &gt;&gt; t &gt;&gt; k;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= k - <span class="number">1</span>; i++) dp[i] = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = k; i &lt;= <span class="number">100000</span>; i++) dp[i] = (<span class="number">1l</span>l * dp[i - <span class="number">1</span>] + <span class="number">1l</span>l * dp[i - k]) % _m;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">100000</span>; i++) dp[i] = (<span class="number">1l</span>l * dp[i - <span class="number">1</span>] + <span class="number">1l</span>l * dp[i]) % _m;</span><br><span class="line">  <span class="keyword">while</span> (t--) &#123;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; a &gt;&gt; b;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; ((<span class="number">1l</span>l * dp[b] - <span class="number">1l</span>l * dp[a - <span class="number">1</span>]) % _m &gt;= <span class="number">0</span> ? (<span class="number">1l</span>l * dp[b] - <span class="number">1l</span>l * dp[a - <span class="number">1</span>]) % _m : (<span class="number">1l</span>l * dp[b] - <span class="number">1l</span>l * dp[a - <span class="number">1</span>]) % _m + _m) &lt;&lt; <span class="string">'\n'</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="https://codeforces.com/contest/474/submission/86848551" target="_blank" rel="noopener">Submission</a></p>
+</article></div></main><div class="corner_layer"><div class="corner_button"><button class="hidden" id="gotoTop" onclick="gotoTop()"><svg width="16" height="16" viewbox="0 0 17 17" xmlns="http://www.w3.org/2000/svg"><title>回到顶部</title><g><path d="M12.036 15.59c0 .55-.453.995-.997.995H5.032c-.55 0-.997-.445-.997-.996V8.584H1.03c-1.1 0-1.36-.633-.578-1.416L7.33.29c.39-.39 1.026-.385 1.412 0l6.878 6.88c.782.78.523 1.415-.58 1.415h-3.004v7.004z" fill-rule="evenodd"/></g></svg></button></div></div></div></div><footer><p>© 2017 - 2020 <a href="https://wizardl.github.io">wizards</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/zypeh/hexo-theme-brutalist" target="_blank">hexo-theme-brutalist</a>.</p><ul><li> <a href="https://wizardl.github.io">home</a></li><li><a href="/atom.xml">atom</a></li></ul></footer></body></html>
