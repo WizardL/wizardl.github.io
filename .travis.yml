@@ -13,7 +13,6 @@ install:
 before_script:
 - git config --global user.name "Wizards"
 - git config --global user.email "zypeh.geek@gmail.com"
-- sed -i "s/__GitOAuthToken__/${__GitOAuthToken__}/" _config.yml
 script:
 - hexo clean
 - hexo generate
